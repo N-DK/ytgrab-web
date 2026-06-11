@@ -39,6 +39,8 @@ app.get("/api/info", async (req, res) => {
     const yt = await Innertube.create();
     const info = await yt.getInfo(videoId);
 
+    console.log(JSON.stringify(info.basic_info, null, 2));
+
     return res.json({
       id: videoId,
       title: info.basic_info.title,
