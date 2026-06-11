@@ -2,7 +2,6 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const os = require("os");
-const youtubeDl = require("youtube-dl-exec");
 const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
 const { Innertube } = require("youtubei.js");
 const app = express();
