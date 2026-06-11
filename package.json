@@ -4,10 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "echo \"No build step required\"",
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vercel dev"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -17,11 +14,9 @@
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
+    "@ffprobe-installer/ffprobe": "^2.1.2",
     "cors": "^2.8.6",
     "express": "^5.2.1",
-    "youtubei.js": "^17.0.1"
-  },
-  "devDependencies": {
-    "vercel": "^48.10.8"
+    "youtube-dl-exec": "^3.1.7"
   }
 }
