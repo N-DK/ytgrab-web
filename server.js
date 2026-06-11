@@ -4,7 +4,7 @@ const fs = require("fs");
 const os = require("os");
 const youtubeDl = require("youtube-dl-exec");
 const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
-
+const { Innertube } = require("youtubei.js");
 const app = express();
 
 app.use(express.json());
@@ -28,20 +28,25 @@ app.get("/api/info", async (req, res) => {
   }
 
   try {
-    const info = await youtubeDl(url, {
-      dumpSingleJson: true,
-      noPlaylist: true,
-      noWarnings: true,
-      ffmpegLocation: FFMPEG_DIR,
-    });
+    const yt = await Innertube.create();
+
+    const videoId = url.match(
+      /(?:v=|youtu\.be\/|shorts\/)([a-zA-Z0-9_-]{11})/,
+    )?.[1];
+
+    if (!videoId) {
+      return res.status(400).json({ error: "URL YouTube không hợp lệ." });
+    }
+
+    const info = await yt.getInfo(videoId);
 
     return res.json({
-      id: info.id,
-      title: info.title,
-      channel: info.uploader,
-      duration: info.duration,
-      thumbnail: info.thumbnail,
-      view_count: info.view_count,
+      id: videoId,
+      title: info.basic_info.title,
+      channel: info.basic_info.author,
+      duration: info.basic_info.duration,
+      thumbnail: info.basic_info.thumbnail?.[0]?.url,
+      view_count: info.basic_info.view_count,
     });
   } catch (e) {
     return res.status(400).json({
