@@ -3,7 +3,6 @@ const path = require("path");
 const fs = require("fs");
 const os = require("os");
 const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
-const { Innertube } = require("youtubei.js");
 const app = express();
 
 app.use(express.json());
@@ -27,7 +26,7 @@ app.get("/api/info", async (req, res) => {
   }
 
   try {
-    const yt = await Innertube.create();
+    const { Innertube } = await import("youtubei.js");
 
     const videoId = url.match(
       /(?:v=|youtu\.be\/|shorts\/)([a-zA-Z0-9_-]{11})/,
@@ -37,6 +36,7 @@ app.get("/api/info", async (req, res) => {
       return res.status(400).json({ error: "URL YouTube không hợp lệ." });
     }
 
+    const yt = await Innertube.create();
     const info = await yt.getInfo(videoId);
 
     return res.json({
